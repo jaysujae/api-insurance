@@ -1,0 +1,25 @@
+
+<div hx-get="/insurances" hx-trigger="every 2s" hx-swap="outerHTML">
+<table class="table is-fullwidth">
+    <tbody>
+      {{ with .List }}
+      {{ range . }}
+      <tr>
+        <td class="has-text-white
+        has-background-info">>{{ .Name }}</td>
+        {{if .Purchased}} 
+        <td class="level-right"> Purchased ! </td>
+        {{else}}
+        <td class="level-right">
+          <a class="button is-small is-primary" href="/purchase">Purchase</a>
+        </td>
+        {{end}}
+      </tr>
+      <tr>
+        <td>{{ .Content }}  {{if .PaidOut}} <strong>...Paid out!</strong> {{end}}</td>
+      </tr>
+      {{ end }}
+      {{ end }}
+    </tbody>
+  </table>
+  </div>

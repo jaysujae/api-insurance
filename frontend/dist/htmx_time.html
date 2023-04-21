@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://unpkg.com/htmx.org@1.7.0"></script>
+  </head>
+  <body>
+    <div hx-get="/htmx/time" hx-trigger="every 2s" hx-swap="outerHTML">
+        aa
+        {{ .Ts }}
+    </div>
+    <p>
+        To-Do list for user: {{ .User }} 
+      </p>
+      <table>
+            <tr>
+            <td>Task</td>
+            <td>Done</td>
+          </tr>
+            {{ with .List }}
+              {{ range . }}
+                    <tr>
+                        <td>{{ .Name }}</td>
+                        <td>{{ if .Done }}Yes{{ else }}No{{ end }}</td>
+                    </tr>
+              {{ end }} 
+            {{ end }}
+      </table>
+  
+  </body>
+</html>
