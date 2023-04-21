@@ -8,6 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"strings"
 
 	"github.com/google/uuid"
 )
@@ -29,6 +30,7 @@ var Master_wallet = "1015033390"
 var Wallet_ID = "aa3ea49b-142d-5561-ada8-6dbcc224228f"
 var Wallet_Address = "0x4e7c398f9eb8be615d33af76c7ca34c1c3f9d99a"
 
+var Deposit_Address = "0x9b1170edeaeeb3d8fc25209eb6991b0c63e55ca5"
 
 var Insurances = []*Insurance{
 	{
@@ -80,6 +82,42 @@ type Response struct {
 }
 
 
+func CheckPurchase() {
+	for _, insurance := range Insurances{
+		if insurance.Purchased || insurance.PaidOut {
+			continue
+		}
+
+		url := "https://api-sandbox.circle.com/v1/paymentIntents/e432ddfb-9b68-484a-b728-c7a6ba10d144"
+		req, err := http.NewRequest("GET", url, nil)
+		if err != nil {
+			return
+		}
+		req.Header.Set("accept", "application/json")
+		req.Header.Set("authorization", "Bearer QVBJX0tFWTo0N2NmZDZmOGZlODRhYTNmMTljZjUzYmYxOWU3ZmFkOTo1MGM5N2VmNmE4Y2YwYjg5MDUxNDY1NWM1ZDRhNDVlOQ==")
+		req.Header.Set("Content-Type", "application/json")
+	
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			return
+		}
+		defer resp.Body.Close()
+	
+		fmt.Println("response Status:", resp.Status)
+		fmt.Println("response Headers:", resp.Header)
+		body, _ := io.ReadAll(resp.Body)
+		fmt.Println("response Body:", string(body))
+		if strings.Contains(string(body), "complete") {
+			fmt.Println("aaa")
+			insurance.Purchased = true
+		}
+		return
+	}
+}
+
+
+
 func Validate() {
 	for _, insurance := range Insurances{
 		if !insurance.Purchased || insurance.PaidOut {
@@ -104,7 +142,6 @@ func Validate() {
 			continue
 		}
 	}
-
 }
 
 

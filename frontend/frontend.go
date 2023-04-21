@@ -39,6 +39,7 @@ func Serve(w http.ResponseWriter, req *http.Request) {
 
 //encore:api public raw path=/insurances
 func Insurances(w http.ResponseWriter, req *http.Request) {
+	insurance.CheckPurchase()
 	insurance.Validate()
 	t := template.Must(template.ParseFS(assets, "insurances.html"))
 	t.Execute(w, Infos{
@@ -48,7 +49,7 @@ func Insurances(w http.ResponseWriter, req *http.Request) {
 
 //encore:api public raw path=/purchase
 func Purchase(w http.ResponseWriter, req *http.Request) {
-	t := template.Must(template.ParseFS(assets, "d/index.html"))
+	t := template.Must(template.ParseFS(assets, "purchase.html"))
 	t.Execute(w, nil)
 }
 
