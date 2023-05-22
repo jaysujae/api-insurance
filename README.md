@@ -8,6 +8,10 @@ API Insurance is an innovative project that leverages the power of Circle's API 
 
 The project aims to increase trust and reliability in APIs by offering a safety net to users in case of unexpected failures, downtimes, or other issues.
 
+<img width="1337" alt="Screenshot 2023-05-22 at 1 03 34 PM" src="https://github.com/jaysujae/api-insurance/assets/11971996/13e90450-3b63-4ab7-9a3e-1c84a67b798c">
+
+
+
 ## Features
 
 - insurance purchase
